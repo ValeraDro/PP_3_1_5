@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Информация о вас</title>
+</head>
+<body>
+<p th:text="'id: ' + ${user.getId}"</p>
+<p th:text="${user.getUsername() + ', ' + user.getAge()}">VALUE</p>
+
+<hr>
+<a th:href="@{/logout}">Logout</a>
+</body>
+</html>
