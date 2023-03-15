@@ -1,10 +1,10 @@
-package ru.kata.spring.boot_security.demo.dao;
+package ru.kata.spring.boot_security.demo.service;
 
 import ru.kata.spring.boot_security.demo.model.User;
 
 import java.util.List;
 
-public interface UserDao {
+public interface UserService {
     List<User> index();
 
     User show(int id);
@@ -15,5 +15,5 @@ public interface UserDao {
 
     void delete(int id);
 
-    List<User> findByUsername(String username);
+    List<User> getUserByUsername(String username);
 }

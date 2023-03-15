@@ -10,22 +10,26 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import ru.kata.spring.boot_security.demo.dao.RoleRepo;
+import org.springframework.web.bind.annotation.RequestParam;
+import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
-import ru.kata.spring.boot_security.demo.service.UserServiceImpl;
+import ru.kata.spring.boot_security.demo.service.RoleService;
+import ru.kata.spring.boot_security.demo.service.UserService;
 
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class UserController {
 
-    private final UserServiceImpl users;
-    private final RoleRepo roleRepo;
+    private final UserService users;
+    private final RoleService roleService;
 
     @Autowired
-    public UserController(UserServiceImpl users, RoleRepo roleRepo) {
+    public UserController(UserService users, RoleService roleService) {
         this.users = users;
-        this.roleRepo = roleRepo;
+        this.roleService = roleService;
     }
 
     @GetMapping(value = "/")
@@ -47,28 +51,40 @@ public class UserController {
 
     @GetMapping("/admin/new")
     public String newUser(ModelMap model) {
-        User user = new User();
-        model.addAttribute("user", user);
-        model.addAttribute("roles", roleRepo.findAll());
+        model.addAttribute("user", new User());
+        model.addAttribute("roles", roleService.findAll());
         return "admin/new";
     }
 
     @PostMapping("/admin")
-    public String create(@ModelAttribute("user") User user) {
+    public String create(@ModelAttribute("user") User user, @ModelAttribute("roles") List<Role> roles) {
+//        List<Role> roleList = new ArrayList<>();
+//        for (String roleId : roles) {
+//            roleList.add(roleService.roleById(Integer.parseInt(roleId)));
+//        }
+        user.setRoles(roles);
         users.save(user);
         return "redirect:/admin";
     }
 
     @GetMapping("/admin/{id}/edit")
     public String edit(Model model, @PathVariable("id") int id) {
-        model.addAttribute("roles", roleRepo.findAll());
+        model.addAttribute("roles", roleService.findAll());
         model.addAttribute("user", users.show(id));
         return "admin/edit";
     }
 
     @PatchMapping("/admin/{id}")
     public String update(@ModelAttribute("user") User user,
-                         @PathVariable("id") int id) {
+                         @PathVariable("id") int id, @ModelAttribute("roles") List<Role> roles) {
+        System.out.println("_______________________________");
+        //List<Role> roleList = new ArrayList<>();
+//        for (String roleId : roles) {
+//            System.out.println("_______________________________"+ roleId);
+//            roleList.add(roleService.roleById(Integer.parseInt(roleId)));
+//            System.out.println("_______________________________"+ roleService.roleById(Integer.parseInt(roleId)));
+//        }
+        user.setRoles(roles);
         users.update(id, user);
         return "redirect:/admin";
     }
@@ -81,9 +97,9 @@ public class UserController {
 
     @GetMapping("/user")
     public String showUser(ModelMap model, Principal principal) {
-        User user = users.getUserByUsername(principal.getName());
-        System.out.println(user);
-        model.addAttribute("user", user);
+        List<User> user = users.getUserByUsername(principal.getName());
+        System.out.println(user.get(0));
+        model.addAttribute("user", user.get(0));
         return "admin/show";
     }
 }

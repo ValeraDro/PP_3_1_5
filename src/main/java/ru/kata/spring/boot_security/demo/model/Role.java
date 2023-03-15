@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "roles")
@@ -17,7 +18,7 @@ public class Role implements GrantedAuthority {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
 
     @Column(name = "authority")
     private String authority;
@@ -33,11 +34,11 @@ public class Role implements GrantedAuthority {
         return authority;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -60,5 +61,18 @@ public class Role implements GrantedAuthority {
                 ", authority='" + authority + '\'' +
                 ", users=" + users +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Role role = (Role) o;
+        return id == role.id && authority.equals(role.authority) && users.equals(role.users);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, authority, users);
     }
 }
