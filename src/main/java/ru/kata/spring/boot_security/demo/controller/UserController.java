@@ -10,24 +10,21 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import ru.kata.spring.boot_security.demo.model.Role;
+import ru.kata.spring.boot_security.demo.dao.RoleRepository;
 import ru.kata.spring.boot_security.demo.model.User;
-import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
 public class UserController {
 
     private final UserService users;
-    private final RoleService roleService;
+    private final RoleRepository roleService;
 
     @Autowired
-    public UserController(UserService users, RoleService roleService) {
+    public UserController(UserService users, RoleRepository roleService) {
         this.users = users;
         this.roleService = roleService;
     }
@@ -57,12 +54,7 @@ public class UserController {
     }
 
     @PostMapping("/admin")
-    public String create(@ModelAttribute("user") User user, @ModelAttribute("roles") List<Role> roles) {
-//        List<Role> roleList = new ArrayList<>();
-//        for (String roleId : roles) {
-//            roleList.add(roleService.roleById(Integer.parseInt(roleId)));
-//        }
-        user.setRoles(roles);
+    public String create(@ModelAttribute("user") User user) {
         users.save(user);
         return "redirect:/admin";
     }
@@ -76,15 +68,7 @@ public class UserController {
 
     @PatchMapping("/admin/{id}")
     public String update(@ModelAttribute("user") User user,
-                         @PathVariable("id") int id, @ModelAttribute("roles") List<Role> roles) {
-        System.out.println("_______________________________");
-        //List<Role> roleList = new ArrayList<>();
-//        for (String roleId : roles) {
-//            System.out.println("_______________________________"+ roleId);
-//            roleList.add(roleService.roleById(Integer.parseInt(roleId)));
-//            System.out.println("_______________________________"+ roleService.roleById(Integer.parseInt(roleId)));
-//        }
-        user.setRoles(roles);
+                         @PathVariable("id") int id) {
         users.update(id, user);
         return "redirect:/admin";
     }

@@ -1,7 +1,6 @@
 package ru.kata.spring.boot_security.demo.dao;
 
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.model.Role;
 
 import javax.persistence.EntityManager;
@@ -10,12 +9,11 @@ import javax.persistence.TypedQuery;
 import java.util.List;
 
 @Repository
-public class RoleDaoImpl implements RoleDao{
+public class RoleDaoImpl implements RoleDao {
 
     @PersistenceContext
     private EntityManager entityManager;
 
-    //@Transactional(readOnly = true)
     @Override
     public List<Role> findAll() {
         return entityManager.createQuery("SELECT r FROM Role r", Role.class).getResultList();
