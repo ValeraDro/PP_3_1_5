@@ -10,8 +10,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import ru.kata.spring.boot_security.demo.dao.RoleRepository;
+import ru.kata.spring.boot_security.demo.dao.RoleDao;
 import ru.kata.spring.boot_security.demo.model.User;
+import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
 import java.security.Principal;
@@ -21,10 +22,10 @@ import java.util.List;
 public class UserController {
 
     private final UserService users;
-    private final RoleRepository roleService;
+    private final RoleService roleService;
 
     @Autowired
-    public UserController(UserService users, RoleRepository roleService) {
+    public UserController(UserService users, RoleService roleService) {
         this.users = users;
         this.roleService = roleService;
     }
@@ -55,6 +56,9 @@ public class UserController {
 
     @PostMapping("/admin")
     public String create(@ModelAttribute("user") User user) {
+        System.out.println("______________________________________");
+        System.out.println(user.getAuthorities());
+        System.out.println(user.getRoles());
         users.save(user);
         return "redirect:/admin";
     }

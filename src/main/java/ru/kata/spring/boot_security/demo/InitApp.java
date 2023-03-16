@@ -1,7 +1,7 @@
 package ru.kata.spring.boot_security.demo;
 
 import org.springframework.stereotype.Component;
-import ru.kata.spring.boot_security.demo.dao.RoleRepository;
+import ru.kata.spring.boot_security.demo.dao.RoleDao;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.RoleService;
@@ -14,9 +14,9 @@ import java.util.List;
 public class InitApp {
 
     private final UserService users;
-    private final RoleRepository roleService;
+    private final RoleService roleService;
 
-    public InitApp(UserService users, RoleRepository roleService) {
+    public InitApp(UserService users, RoleService roleService) {
 
         this.users = users;
         this.roleService = roleService;
@@ -28,8 +28,8 @@ public class InitApp {
         users.save(admin);
 
         List<Role> rolesAdmin = new ArrayList<>();
-        Role roleAdmin = roleService.findById(1).orElse(null);
-        Role roleUser = roleService.findById(2).orElse(null);
+        Role roleAdmin = roleService.roleById(1);
+        Role roleUser = roleService.roleById(2);
         rolesAdmin.add(roleAdmin);
         rolesAdmin.add(roleUser);
         admin.setRoles(rolesAdmin);
