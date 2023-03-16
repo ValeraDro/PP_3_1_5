@@ -19,7 +19,7 @@ public class Role implements GrantedAuthority {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "authority")
+    @Column(name = "authority", unique = true)
     private String authority;
 
     @ManyToMany(mappedBy = "roles")
@@ -61,5 +61,26 @@ public class Role implements GrantedAuthority {
     public String toString() {
         String str = this.getAuthority();
         return str.replace("ROLE_", "");
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Role role = (Role) o;
+
+        if (id != role.id) return false;
+        if (!authority.equals(role.authority)) return false;
+        return users.equals(role.users);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + authority.hashCode();
+        result = 31 * result + users.hashCode();
+        return result;
     }
 }

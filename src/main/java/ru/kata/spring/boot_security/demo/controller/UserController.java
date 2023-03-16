@@ -10,12 +10,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import ru.kata.spring.boot_security.demo.dao.RoleDao;
+import org.springframework.web.bind.annotation.RequestParam;
+import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -55,10 +57,13 @@ public class UserController {
     }
 
     @PostMapping("/admin")
-    public String create(@ModelAttribute("user") User user) {
-        System.out.println("______________________________________");
-        System.out.println(user.getAuthorities());
-        System.out.println(user.getRoles());
+    public String create(@ModelAttribute("user") User user,
+                         @RequestParam(value = "roles") String[] roles) {
+        List<Role> rolesList = new ArrayList<>();
+        for (String role : roles) {
+            rolesList.add(roleService.roleById(Integer.valueOf(role)));
+        }
+        user.setRoles(rolesList);
         users.save(user);
         return "redirect:/admin";
     }
@@ -72,7 +77,12 @@ public class UserController {
 
     @PatchMapping("/admin/{id}")
     public String update(@ModelAttribute("user") User user,
-                         @PathVariable("id") int id) {
+                         @PathVariable("id") int id, @RequestParam(value = "roles") String[] roles) {
+        List<Role> rolesList = new ArrayList<>();
+        for (String role : roles) {
+            rolesList.add(roleService.roleById(Integer.valueOf(role)));
+        }
+        user.setRoles(rolesList);
         users.update(id, user);
         return "redirect:/admin";
     }

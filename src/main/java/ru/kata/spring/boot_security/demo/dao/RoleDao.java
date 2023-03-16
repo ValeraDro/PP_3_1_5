@@ -8,4 +8,5 @@ public interface RoleDao {
     List<Role> findAll();
 
     Role roleById(int id);
+
 }

@@ -8,7 +8,7 @@ import ru.kata.spring.boot_security.demo.model.Role;
 import java.util.List;
 
 @Service
-public class RoleServiceImpl implements RoleService{
+public class RoleServiceImpl implements RoleService {
 
     @Autowired
     private final RoleDao roleDao;
@@ -26,4 +26,5 @@ public class RoleServiceImpl implements RoleService{
     public Role roleById(int id) {
         return roleDao.roleById(id);
     }
+
 }

@@ -1,7 +1,6 @@
 package ru.kata.spring.boot_security.demo;
 
 import org.springframework.stereotype.Component;
-import ru.kata.spring.boot_security.demo.dao.RoleDao;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.RoleService;
@@ -20,6 +19,7 @@ public class InitApp {
 
         this.users = users;
         this.roleService = roleService;
+
 
         User admin = new User();
         admin.setUsername("admin");

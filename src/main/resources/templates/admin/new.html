@@ -16,13 +16,16 @@
     <label for="age">Возраст: </label>
     <input type="text" th:field="*{age}" id="age"/>
     <br/>
-    <label for="roles">Roles: </label>
-    <input type="checkbox" name="roles" id="roles"
-           th:each="role : ${roles}"
-           th:text="${role.authority}"
-           th:value="${role.id}"
-           th:field="*{roles}"
-    />
+    <p>
+        <label>Roles:
+            <input type="checkbox" name="roles" id="roles"
+                   th:each="role : ${roles}"
+                   th:text="${role.authority}"
+                   th:value="${role.id}"
+                   th:field="*{roles}"
+            />
+        </label>
+    </p>
     <br/>
     <input type="submit" value="Создать"/>
 </form>
