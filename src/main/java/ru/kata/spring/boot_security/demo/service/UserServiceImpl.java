@@ -37,7 +37,7 @@ public class UserServiceImpl extends UserSecurity implements UserService {
         userdao.delete(id);
     }
 
-    public List<User> getUserByUsername(String username) {
+    public List<User> findByUsername(String username) {
         return userdao.findByUsername(username);
     }
 }

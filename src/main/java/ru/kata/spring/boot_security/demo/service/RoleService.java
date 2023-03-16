@@ -9,4 +9,6 @@ public interface RoleService {
 
     Role roleById(int id);
 
+    Role roleByName(String name);
+
 }
