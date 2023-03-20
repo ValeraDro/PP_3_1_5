@@ -11,7 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import java.util.List;
-import java.util.Objects;
 
 @Entity
 @Table(name = "roles")
@@ -70,12 +69,17 @@ public class Role implements GrantedAuthority {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+
         Role role = (Role) o;
-        return id == role.id && authority.equals(role.authority) && Objects.equals(users, role.users);
+
+        if (id != role.id) return false;
+        return authority.equals(role.authority);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, authority, users);
+        int result = id;
+        result = 31 * result + authority.hashCode();
+        return result;
     }
 }

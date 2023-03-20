@@ -16,10 +16,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 import java.util.Collection;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Entity
@@ -132,12 +130,21 @@ public class User implements UserDetails {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+
         User user = (User) o;
-        return id == user.id && age == user.age && Objects.equals(roles, user.roles) && username.equals(user.username) && password.equals(user.password);
+
+        if (id != user.id) return false;
+        if (age != user.age) return false;
+        if (!username.equals(user.username)) return false;
+        return password.equals(user.password);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, roles, username, password, age);
+        int result = id;
+        result = 31 * result + username.hashCode();
+        result = 31 * result + password.hashCode();
+        result = 31 * result + age;
+        return result;
     }
 }
