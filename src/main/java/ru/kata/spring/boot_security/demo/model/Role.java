@@ -1,5 +1,6 @@
 package ru.kata.spring.boot_security.demo.model;
 
+import com.sun.istack.NotNull;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.Column;
@@ -10,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "roles")
@@ -19,6 +21,7 @@ public class Role implements GrantedAuthority {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @NotNull
     @Column(name = "authority", unique = true)
     private String authority;
 
@@ -57,30 +60,22 @@ public class Role implements GrantedAuthority {
         this.users = users;
     }
 
-    @Override
-    public String toString() {
-        String str = this.getAuthority();
-        return str.replace("ROLE_", "");
-    }
-
+//    @Override
+//    public String toString() {
+//        String str = this.getAuthority();
+//        return str.replace("ROLE_", "");
+//    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         Role role = (Role) o;
-
-        if (id != role.id) return false;
-        if (!authority.equals(role.authority)) return false;
-        return users.equals(role.users);
+        return id == role.id && authority.equals(role.authority) && Objects.equals(users, role.users);
     }
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + authority.hashCode();
-        result = 31 * result + users.hashCode();
-        return result;
+        return Objects.hash(id, authority, users);
     }
 }

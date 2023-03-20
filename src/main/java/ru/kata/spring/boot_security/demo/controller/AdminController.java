@@ -50,13 +50,13 @@ public class AdminController {
     }
 
     @PostMapping("/admin")
-    public String create(@ModelAttribute("user") User user,
-                         @RequestParam(value = "roles") String[] roles) {
-        List<Role> rolesList = new ArrayList<>();
-        for (String role : roles) {
-            rolesList.add(roleService.roleById(Integer.valueOf(role)));
-        }
-        user.setRoles(rolesList);
+    public String create(@ModelAttribute("user") User user/*,
+                         @RequestParam(value = "roles") String[] roles*/) {
+//        List<Role> rolesList = new ArrayList<>();
+//        for (String role : roles) {
+//            rolesList.add(roleService.roleByName("ROLE_"+role));
+//        }
+//        user.setRoles(rolesList);
         users.save(user);
         return "redirect:/admin";
     }
@@ -70,12 +70,12 @@ public class AdminController {
 
     @PatchMapping("/admin/{id}")
     public String update(@ModelAttribute("user") User user,
-                         @PathVariable("id") int id, @RequestParam(value = "roles") String[] roles) {
-        List<Role> rolesList = new ArrayList<>();
-        for (String role : roles) {
-            rolesList.add(roleService.roleById(Integer.valueOf(role)));
-        }
-        user.setRoles(rolesList);
+                         @PathVariable("id") int id/*, @RequestParam(value = "roles") String[] roles*/) {
+//        List<Role> rolesList = new ArrayList<>();
+//        for (String role : roles) {
+//            rolesList.add(roleService.roleByName("ROLE_"+role));
+//        }
+//        user.setRoles(rolesList);
         users.update(id, user);
         return "redirect:/admin";
     }

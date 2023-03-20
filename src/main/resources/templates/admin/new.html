@@ -21,7 +21,7 @@
             <input type="checkbox" name="roles" id="roles"
                    th:each="role : ${roles}"
                    th:text="${role.authority}"
-                   th:value="${role.id}"
+                   th:value="${role.authority}"
                    th:field="*{roles}"
             />
         </label>
