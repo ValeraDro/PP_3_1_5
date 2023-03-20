@@ -20,8 +20,8 @@ public class InitApp {
         this.users = users;
         this.roleService = roleService;
 
-        Role roleAdmin = roleService.roleByName("ROLE_ADMIN");
-        Role roleUser = roleService.roleByName("ROLE_USER");
+        Role roleAdmin = roleService.getByName("ROLE_ADMIN");
+        Role roleUser = roleService.getByName("ROLE_USER");
 
         List<Role> rolesAdmin = new ArrayList<>();
         rolesAdmin.add(roleAdmin);

@@ -7,8 +7,8 @@ import java.util.List;
 public interface RoleDao {
     List<Role> findAll();
 
-    Role roleById(int id);
+    Role getById(int id);
 
-    Role roleByName(String name);
+    Role getByName(String name);
 
 }

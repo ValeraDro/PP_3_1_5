@@ -54,7 +54,7 @@ public class AdminController {
                          @RequestParam(value = "roles") String[] roles*/) {
 //        List<Role> rolesList = new ArrayList<>();
 //        for (String role : roles) {
-//            rolesList.add(roleService.roleByName("ROLE_"+role));
+//            rolesList.add(roleService.getByName("ROLE_"+role));
 //        }
 //        user.setRoles(rolesList);
         users.save(user);
@@ -73,7 +73,7 @@ public class AdminController {
                          @PathVariable("id") int id/*, @RequestParam(value = "roles") String[] roles*/) {
 //        List<Role> rolesList = new ArrayList<>();
 //        for (String role : roles) {
-//            rolesList.add(roleService.roleByName("ROLE_"+role));
+//            rolesList.add(roleService.getByName("ROLE_"+role));
 //        }
 //        user.setRoles(rolesList);
         users.update(id, user);

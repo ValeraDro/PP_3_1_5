@@ -22,13 +22,13 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public Role roleById(int id) {
-        return roleDao.roleById(id);
+    public Role getById(int id) {
+        return roleDao.getById(id);
     }
 
     @Override
-    public Role roleByName(String name) {
-        return roleDao.roleByName(name);
+    public Role getByName(String name) {
+        return roleDao.getByName(name);
     }
 
 }

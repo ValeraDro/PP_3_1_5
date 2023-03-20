@@ -60,11 +60,11 @@ public class Role implements GrantedAuthority {
         this.users = users;
     }
 
-//    @Override
-//    public String toString() {
-//        String str = this.getAuthority();
-//        return str.replace("ROLE_", "");
-//    }
+    @Override
+    public String toString() {
+        String str = this.getAuthority();
+        return str.replace("ROLE_", "");
+    }
 
     @Override
     public boolean equals(Object o) {
