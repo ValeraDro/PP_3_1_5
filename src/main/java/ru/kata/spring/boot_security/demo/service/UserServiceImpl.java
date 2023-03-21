@@ -40,4 +40,8 @@ public class UserServiceImpl extends UserSecurity implements UserService {
     public List<User> findByUsername(String username) {
         return userdao.findByUsername(username);
     }
+
+    public User findByEmail(String email) {
+        return userdao.findByEmail(email);
+    }
 }

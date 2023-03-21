@@ -30,10 +30,11 @@ public class InitApp {
         List<Role> rolesUser = new ArrayList<>();
         rolesUser.add(roleUser);
 
-        List<User> usersList = users.findByUsername("admin");
-        if (usersList.isEmpty()) {
-            User admin = new User();
+        User admin = users.findByEmail("admin@mail.ru");
+        if (admin == null) {
+            admin = new User();
             admin.setUsername("admin");
+            admin.setEmail("admin@mail.ru");
             admin.setPassword("admin");
             admin.setAge(5);
             users.save(admin);
@@ -41,10 +42,11 @@ public class InitApp {
             users.update(admin.getId(), admin);
         }
 
-        usersList = users.findByUsername("user");
-        if (usersList.isEmpty()) {
-            User user = new User();
+        User user = users.findByEmail("user@mail.ru");
+        if (user == null) {
+            user = new User();
             user.setUsername("user");
+            user.setEmail("user@mail.ru");
             user.setPassword("user");
             user.setAge(55);
             users.save(user);

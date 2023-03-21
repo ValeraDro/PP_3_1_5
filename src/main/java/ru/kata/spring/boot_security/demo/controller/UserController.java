@@ -28,10 +28,15 @@ public class UserController {
 
     @GetMapping("/user")
     public String showUser(ModelMap model, Principal principal) {
-        List<User> user = users.findByUsername(principal.getName());
-        System.out.println(user.get(0));
-        model.addAttribute("user", user.get(0));
+        User authenticatedUser = users.findByEmail(principal.getName());
+        model.addAttribute("authenticatedUser", authenticatedUser);
+        model.addAttribute("authenticatedUserRoles", authenticatedUser.getRoles());
         return "admin/show";
+    }
+
+    @GetMapping("/login")
+    public String login() {
+        return "login";
     }
 }
 

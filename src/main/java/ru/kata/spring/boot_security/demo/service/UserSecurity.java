@@ -21,13 +21,13 @@ public class UserSecurity implements UserDetailsService {
 
     @Override
     @Transactional
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
-        List<User> users = userdao.findByUsername(username);
-        if (users.isEmpty()) {
-            throw new UsernameNotFoundException(String.format("User '%s' not found", username));
+        User user = userdao.findByEmail(email);
+        if (user == null) {
+            throw new UsernameNotFoundException(String.format("Email '%s' not found", email));
         }
 
-        return new org.springframework.security.core.userdetails.User(users.get(0).getUsername(), users.get(0).getPassword(), users.get(0).getAuthorities());
+        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), user.getAuthorities());
     }
 }

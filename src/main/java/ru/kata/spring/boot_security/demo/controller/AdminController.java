@@ -16,6 +16,7 @@ import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,8 +32,13 @@ public class AdminController {
     }
 
     @GetMapping("/admin")
-    public String index(Model model) {
+    public String index(Model model, Principal principal) {
+        User authenticatedUser = users.findByEmail(principal.getName());
+        model.addAttribute("authenticatedUser", authenticatedUser);
+        model.addAttribute("authenticatedUserRoles", authenticatedUser.getRoles());
         model.addAttribute("users", users.index());
+        model.addAttribute("newUser", new User());
+        model.addAttribute("roles", roleService.findAll());
         return "admin/list";
     }
 
@@ -50,7 +56,7 @@ public class AdminController {
     }
 
     @PostMapping("/admin")
-    public String create(@ModelAttribute("user") User user,
+    public String create(@ModelAttribute("newUser") User user,
                          @RequestParam(value = "roles") String[] roles) {
 
         List<Role> rolesList = new ArrayList<>();
