@@ -33,9 +33,9 @@ public class InitApp {
         User admin = users.findByEmail("admin@mail.ru");
         if (admin == null) {
             admin = new User();
-            admin.setUsername("admin");
+            admin.setFirstName("admin");
             admin.setEmail("admin@mail.ru");
-            admin.setPassword("admin");
+            admin.setPassword("$2a$10$L5CenfUUbHtGR2yuqC6nWeXK2kI/xwcTH/HSXY.bfR3Ewukm3UC5K"); //admin
             admin.setAge(5);
             users.save(admin);
             admin.setRoles(rolesAdmin);
@@ -45,9 +45,9 @@ public class InitApp {
         User user = users.findByEmail("user@mail.ru");
         if (user == null) {
             user = new User();
-            user.setUsername("user");
+            user.setFirstName("user");
             user.setEmail("user@mail.ru");
-            user.setPassword("user");
+            user.setPassword("$2a$10$8eR5O/xsSfpjvlgesKOP/.iUiWVpv3IP18HIXbIsep9/S9ykMC/MG"); //user
             user.setAge(55);
             users.save(user);
             user.setRoles(rolesUser);
