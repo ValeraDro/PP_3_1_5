@@ -40,7 +40,7 @@ public class AdminController {
         model.addAttribute("users", users.index());
         model.addAttribute("newUser", new User());
         model.addAttribute("roles", roleService.findAll());
-        return "admin/list";
+        return "admin/index";
     }
 
     @GetMapping("/admin/{id}")
