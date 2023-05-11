@@ -27,7 +27,7 @@ public class UserController {
         User authenticatedUser = users.findByEmail(principal.getName());
         model.addAttribute("authenticatedUser", authenticatedUser);
         model.addAttribute("authenticatedUserRoles", authenticatedUser.getRoles());
-        return "admin/show";
+        return "user";
     }
 
     @GetMapping("/login")

@@ -4,6 +4,7 @@ let deleteModalForm = document.forms['deleteModalForm']
 let newUserForm = document.forms['newUserForm']
 
 $(async function () {
+    await getAuthenticatedUser()
     await fillUsersTable()
     addUser()
     editUser()
@@ -11,7 +12,7 @@ $(async function () {
 })
 
 async function getUser(id) {
-    let response = await fetch('/admin/api/users/' + id)
+    let response = await fetch('/admin/users/' + id)
     return await response.json()
 }
 
@@ -40,7 +41,7 @@ async function fillModalForm(form, modal, id) {
 
 function fillUsersTable() {
     allUsersTable.empty()
-    fetch('/admin/api/users')
+    fetch('/admin/users')
         .then(res => res.json())
         .then(data =>
             data.forEach(user => {
@@ -88,7 +89,7 @@ function editUser() {
                 })
             }
         }
-        fetch('/admin/api/users/' + editModalForm.id.value, {
+        fetch('/admin/users/' + editModalForm.id.value, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -119,7 +120,7 @@ async function openDeleteModal(id) {
 function deleteUser() {
     deleteModalForm.addEventListener("submit", event => {
         event.preventDefault()
-        fetch("/admin/api/users/" + deleteModalForm.id.value, {
+        fetch("/admin/users/" + deleteModalForm.id.value, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'
@@ -144,7 +145,7 @@ function addUser() {
                 })
             }
         }
-        fetch('/admin/api/users', {
+        fetch('/admin/users', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -164,4 +165,24 @@ function addUser() {
             $('#nav-home-tab').tab('show')
         })
     })
+}
+
+function getAuthenticatedUser() {
+    fetch('/user/get')
+        .then(res => res.json())
+        .then(data => {
+            $('#authenticatedUserEmail').append(data.email);
+            let roles = data.roles.map(role => ' ' + role.authority.substring(5))
+            $('#authenticatedUserRoles').append(roles)
+            let user = `$(
+                <tr>
+                    <td>${data.id}</td>
+                    <td>${data.firstName}</td>
+                    <td>${data.lastName}</td>
+                    <td>${data.age}</td>
+                    <td>${data.email}</td>
+                    <td>${roles}</td>
+                </tr>)`
+            $('#authenticatedUserTable').append(user)
+        })
 }

@@ -20,13 +20,12 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <span class="navbar-brand mb-0 h1" aria-current="page" style="display: inline;"
-                          th:text="${authenticatedUser.getEmail()}">Current User</span>
+                    <span id="authenticatedUserEmail" class="navbar-brand mb-0 h1" aria-current="page"
+                          style="display: inline;"></span>
                     <h5 style="display: inline;" class=" text-white fw-normal">with roles:</h5>
-                    <h5 th:each="authenticatedUserRole : ${authenticatedUserRoles}"
-                        th:text="${authenticatedUserRole.getAuthority().replace('ROLE_', '')}"
+                    <h5 id="authenticatedUserRoles"
                         class="text-white fw-normal" aria-current="page"
-                        style="display: inline;"> Current User's Roles</h5>
+                        style="display: inline;"></h5>
                 </li>
             </ul>
             <ul class="navbar-nav ms-auto">
@@ -140,12 +139,12 @@
                                     </div>
                                     <p>
                                         <label class="form-label fw-bold">Role</label>
-                                        <select class="w-100 form-select" name="newUserRoles"
-                                                th:field="*{roles}" size="2"
+                                        <select class="w-100 form-select" name="roles"
+                                                id="roles" size="2"
                                                 multiple
                                                 required>
                                             <option th:each="role : ${roles}" th:value="${role.id}"
-                                                    th:text="${role}" th:selected="${true}"/>
+                                                    th:text="${role}" th:selected="${role.id==2}"/>
 
                                         </select>
                                     </p>
