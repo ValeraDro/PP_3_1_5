@@ -42,10 +42,7 @@
     <div class="row mt-3">
         <div class="nav flex-column nav-pills col-2" id="v-pills-tab" role="tablist"
              aria-orientation="vertical">
-                <span th:each="authenticatedUserRole : ${authenticatedUserRoles}"
-                      th:if="${authenticatedUserRole.authority.contains('ROLE_ADMIN')}" class="nav-item">
-                    <a th:href="@{/admin}" class="nav-link active"
-                       aria-current="page">Admin</a>
+                <span id="leftMenuAdmin">
                 </span>
             <a th:href="@{/user}" class="nav-link">User</a>
         </div>
@@ -96,12 +93,11 @@
                         </div>
                         <div class="card-body">
                             <div class="text-center d-flex justify-content-center">
-                                <form id="newUserForm" class="col-3" th:method="POST" th:action="@{/admin}"
-                                      th:object="${newUser}">
+                                <form id="newUserForm" class="col-3">
                                     <div class="form-group mb-2">
                                         <label for="firstName" class="form-label fw-bold">First
                                             name</label>
-                                        <input type="text" name="firstName" th:field="${newUser.firstName}"
+                                        <input type="text" name="firstName"
                                                class="form-control"
                                                id="firstName" placeholder="First name"/>
                                     </div>
@@ -109,14 +105,14 @@
                                     <div class="form-group mb-2">
                                         <label for="lastName" class="form-label fw-bold">Last
                                             name</label>
-                                        <input type="text" name="lastName" th:field="${newUser.lastName}"
+                                        <input type="text" name="lastName"
                                                class="form-control"
                                                id="lastName" placeholder="Last name"/>
                                     </div>
 
                                     <div class="form-group">
                                         <label for="age" class="form-label fw-bold">Age</label>
-                                        <input type="number" name="age" th:field="${newUser.age}"
+                                        <input type="number" name="age"
                                                class="form-control"
                                                id="age"
                                                min="0" max="120" placeholder="Age"/>
@@ -124,7 +120,7 @@
 
                                     <div class="form-group">
                                         <label for="email" class="form-label fw-bold">Email</label>
-                                        <input type="email" name="email" th:field="${newUser.email}"
+                                        <input type="email" name="email"
                                                class="form-control"
                                                id="email" placeholder="Email"/>
                                     </div>
@@ -132,7 +128,7 @@
                                     <div class="form-group">
                                         <label for="password"
                                                class="form-label fw-bold">Password</label>
-                                        <input type="password" name="password" th:field="${newUser.password}"
+                                        <input type="password" name="password"
                                                class="form-control"
                                                id="password"
                                                minlength="3" placeholder="Password"/>
@@ -143,9 +139,8 @@
                                                 id="roles" size="2"
                                                 multiple
                                                 required>
-                                            <option th:each="role : ${roles}" th:value="${role.id}"
-                                                    th:text="${role}" th:selected="${role.id==2}"/>
-
+                                            <option value="1">ADMIN</option>
+                                            <option value="2" selected>USER</option>
                                         </select>
                                     </p>
                                     <input class="btn btn-success" type="submit"

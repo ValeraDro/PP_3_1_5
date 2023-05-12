@@ -184,5 +184,12 @@ function getAuthenticatedUser() {
                     <td>${roles}</td>
                 </tr>)`
             $('#authenticatedUserTable').append(user)
+            if (roles == " ADMIN, USER") {
+                let link = `<a href="/admin" class="nav-link active" aria-current="page">Admin</a>`
+                $('#leftMenuAdmin').append(link);
+                link = `<a href="/admin" class="nav-link" aria-current="page">Admin</a>`
+                $('#leftMenuUser').append(link);
+            }
+
         })
 }
